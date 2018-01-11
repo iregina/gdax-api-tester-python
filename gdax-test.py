@@ -1,14 +1,3 @@
-#import gdax 
-#public_client = gdax.PublicClient()
-
-# Requires python-requests. Install with pip:
-#
-#   pip install requests
-#
-# or, with easy-install:
-#
-#   easy_install requests
-
 import json, hmac, hashlib, time, requests, base64, config
 from requests.auth import AuthBase
 
@@ -60,9 +49,7 @@ print r.json()
 print "Welcome to GDAX API Tester in Python!"
 var = raw_input("Which API call would you like to test?: ")
 var = var.upper()
-if var == "LTC":
-    print your_accounts.json()[0]
-elif var == "BALANCE":
+if var == "BALANCE":
     print ""
     print "YOUR GDAX WALLET BALANCE"
     print "------------------------"
@@ -71,13 +58,38 @@ elif var == "BALANCE":
     print "EUR: " + your_accounts.json()[2]['balance']
     print "BTC: " + your_accounts.json()[3]['balance']
     print "USD: " + your_accounts.json()[4]['balance']
-    print "ETH: " + your_accounts.json()[5]['balance']
+    print "ETH: " + your_accounts.json()[5]
     print "BCH: " + your_accounts.json()[6]['balance']
     print ""
-elif var == "EUR":
-    print your_accounts.json()[2]['balance']
-elif var == "BTC":
-    print your_accounts.json()[3]['balance']
+elif var == "ID":
+    print ""
+    print "YOUR GDAX WALLET ACCOUNT IDs"
+    print "----------------------------"
+    print "LTC: " + your_accounts.json()[0]['id']
+    print "GBP: " + your_accounts.json()[1]['id']
+    print "EUR: " + your_accounts.json()[2]['id']
+    print "BTC: " + your_accounts.json()[3]['id']
+    print "USD: " + your_accounts.json()[4]['id']
+    print "ETH: " + your_accounts.json()[5]['id']
+    print "BCH: " + your_accounts.json()[6]['id']
+    print ""
+elif var == "ORDER":
+    product_id = raw_input("Which orderbook which you like to use?: ")
+    size = raw_input("Please input the amount of BTC to buy or sell: ")
+    price = raw_input("Price per bitcoin: ")
+    order = {
+    'size': size,
+    'price': price,
+    'side': 'buy',
+    'product_id': product_id,
+    }
+    print "This is a preview of your order:"
+    print order
+    order_confirmation = raw_input("Does this look good? (Y/N) ")
+    if order_confirmation == "Y" or "y":
+        print "order confirmed"
+    else:
+        print "order not confirmed"
 elif var == "USD":
     print your_accounts.json()[4]['balance']
 elif var == "ETH":
