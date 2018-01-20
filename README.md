@@ -30,6 +30,7 @@ For those who are totally brand new to Python (like me).
 ```api_key = "[your key here]"
 api_secret = "[your secret here]"
 passphrase = "[your passphrase here]"
+```
 
 ## Running your app
 Now let's get started. 
