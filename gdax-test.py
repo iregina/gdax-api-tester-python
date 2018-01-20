@@ -2,7 +2,7 @@ import json, hmac, hashlib, time, requests, base64, config
 from requests.auth import AuthBase
 
 # Create custom authentication for Exchange
-class CoinbaseExchangeAuth(AuthBase):
+class GdaxAuth(AuthBase):
     def __init__(self, api_key, secret_key, passphrase):
         self.api_key = config.api_key
         self.secret_key = config.api_secret
@@ -15,38 +15,33 @@ class CoinbaseExchangeAuth(AuthBase):
         signature = hmac.new(hmac_key, message, hashlib.sha256)
         signature_b64 = signature.digest().encode('base64').rstrip('\n')
 
+        # using API key for authentication
         request.headers.update({
             'CB-ACCESS-SIGN': signature_b64,
             'CB-ACCESS-TIMESTAMP': timestamp,
             'CB-ACCESS-KEY': self.api_key,
             'CB-ACCESS-PASSPHRASE': self.passphrase,
-            'Content-Type': 'application/json'
+            'Content-Type': 'Application/JSON'
         })
+        print request
+        print request.headers
         return request
 
 api_url = 'https://api.gdax.com/'
-auth = CoinbaseExchangeAuth(config.api_key, config.api_secret, config.passphrase)
+auth = GdaxAuth(config.api_key, config.api_secret, config.passphrase)
 
 # Get accounts
 your_accounts = requests.get(api_url + 'accounts', auth=auth)
-
-# [{"id": "a1b2c3d4", "balance":...
-
-# Place an order
-"""
-order = {
-    'size': 1.0,
-    'price': 1.0,
-    'side': 'buy',
-    'product_id': 'BTC-USD',
-}
-r = requests.post(api_url + 'orders', json=order, auth=auth)
-print r.json()
-"""
-# {"id": "0428b97b-bec1-429e-a94c-59992926778d"}
-
-
-print "Welcome to GDAX API Tester in Python!"
+print ""
+print "------------------------------------------------"
+print "Hello. Welcome to GDAX API Tester in Python!"
+print ""
+print "These are the following options:"
+print "1) balance -> see your gdax wallet balances"
+print "2) id -> see your wallet account ids"
+print "3) order -> place an order"
+print "------------------------------------------------"
+print ""
 var = raw_input("Which API call would you like to test?: ")
 var = var.upper()
 if var == "BALANCE":
@@ -58,7 +53,7 @@ if var == "BALANCE":
     print "EUR: " + your_accounts.json()[2]['balance']
     print "BTC: " + your_accounts.json()[3]['balance']
     print "USD: " + your_accounts.json()[4]['balance']
-    print "ETH: " + your_accounts.json()[5]
+    print "ETH: " + your_accounts.json()[5]['balance']
     print "BCH: " + your_accounts.json()[6]['balance']
     print ""
 elif var == "ID":
@@ -74,30 +69,48 @@ elif var == "ID":
     print "BCH: " + your_accounts.json()[6]['id']
     print ""
 elif var == "ORDER":
-    product_id = raw_input("Which orderbook which you like to use?: ")
-    size = raw_input("Please input the amount of BTC to buy or sell: ")
-    price = raw_input("Price per bitcoin: ")
+    product_id = raw_input("Which orderbook which you like to use? (btc-usd / eth-usd / ltc-usd) ")
+    order_type = raw_input("Would you like to buy or sell? (buy/sell)")
+    size = raw_input("Please input the amount of cryto to " + order_type + "?")
+    price = raw_input("Price per cryto: ")
     order = {
-    'size': size,
-    'price': price,
-    'side': 'buy',
+    'size': float(size),
+    'price': float(price),
+    'side': order_type,
     'product_id': product_id,
     }
     print "This is a preview of your order:"
     print order
     order_confirmation = raw_input("Does this look good? (Y/N) ")
-    if order_confirmation == "Y" or "y":
+    if order_confirmation == "Y":
         print "order confirmed"
+        r = requests.post(api_url + 'orders', json=order, auth=auth)
+        print r.json()
+        print "Done!"
     else:
         print "order not confirmed"
-elif var == "USD":
-    print your_accounts.json()[4]['balance']
-elif var == "ETH":
-    print your_accounts.json()[5]['balance']
+elif var == "TEST":
+    order = {
+    'size': '0.01',
+    'price': '1000.00',
+    'side': 'sell',
+    'product_id': 'LTC-USD',
+    'type': 'limit'
+    }
+    print requests
+    r = requests.post(api_url + 'orders', json=order, auth=auth)
+    print r.json()
+elif var == "LIST ORDERS":
+    r = requests.get(api_url + 'orders')
+    print r.json
 elif var == "BCH":
     print your_accounts.json()[6]['balance']
 elif var == "order":
     print "order up!"
 else: 
     print "Sorry, that is not a valid response"
+
+
+
+
 
