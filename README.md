@@ -24,12 +24,36 @@ For those who are totally brand new to Python (like me).
 ##### 8. Open up the repository in terminal and create a config.py file:
 ```$ touch config.py```
 
-##### 9. Go to https://www.gdax.com/settings/api, select all the permissions, and create an API Key.
+##### 9. Go to https://www.gdax.com/settings/api, select all the necessary permissions, and create an API Key.
 
-##### 9. Open the config.py in your text editor, and include your API Key, API Secret, and Passphase under:
+##### 10. Open the config.py in your text editor, and include your API Key, API Secret, and Passphase like this:
 ```api_key = "[your key here]"
 api_secret = "[your secret here]"
-passphrase = "[your passphrase here]"'''
+passphrase = "[your passphrase here]"
+
+## Running your app
+Now let's get started. 
+
+#### 1. In terminal, go to your gdax-api-tester-python repository and run:
+```python gdax-test.py```
+
+#### 2.  You will see the following question: 
+``` Hello. Welcome to GDAX API Tester in Python!
+
+These are the following options:
+1) balance -> see your gdax wallet balances
+2) id -> see your wallet account ids
+3) order -> place an order'''
+
+
+Enter ```balance``` in the terminal to see all of your GDAX wallet balances
+
+Enter ```id``` to see the wallet account ids of all your GDAX wallets
+
+Enter ```order``` to place a GDAX order
+
+
+
 
 
 
