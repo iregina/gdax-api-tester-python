@@ -20,3 +20,16 @@ For those who are totally brand new to Python (like me).
 
 ##### 7. In terminal, type git clone, and then paste the URL you copied in Step 2. It will look like this, with your GitHub username instead of YOUR-USERNAME:
 ```$ git clone https://github.com/YOUR-USERNAME/gdax-api-tester-python```
+
+##### 8. Open up the repository in terminal and create a config.py file:
+```$ touch config.py```
+
+##### 9. Go to https://www.gdax.com/settings/api, select all the permissions, and create an API Key.
+
+##### 9. Open the config.py in your text editor, and include your API Key, API Secret, and Passphase under:
+```api_key = "[your key here]"
+api_secret = "[your secret here]"
+passphrase = "[your passphrase here]"'''
+
+
+
