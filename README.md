@@ -45,7 +45,7 @@ These are the following options:
 1) balance -> see your gdax wallet balances
 2) id -> see your wallet account ids
 3) order -> place an order
-'''
+```
 
 
 Enter ```balance``` in the terminal to see all of your GDAX wallet balances
